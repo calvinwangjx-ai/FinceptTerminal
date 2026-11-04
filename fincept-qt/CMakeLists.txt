@@ -812,7 +812,8 @@ FetchContent_Declare(
     ed25519
     GIT_REPOSITORY https://github.com/orlp/ed25519.git
     GIT_TAG        b1f19fab4aebe607805620d25a5e42566ce46a0e  # master @ 2026-04-27
-    GIT_SHALLOW    TRUE
+    # No GIT_SHALLOW: untagged master pin — see the QGeoView note above. A
+    # shallow clone breaks as soon as upstream master gets a new commit.
     UPDATE_DISCONNECTED TRUE
 )
 FetchContent_MakeAvailable(ed25519)
