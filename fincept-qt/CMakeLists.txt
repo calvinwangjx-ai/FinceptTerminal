@@ -725,7 +725,10 @@ FetchContent_Declare(
     QGeoView
     GIT_REPOSITORY https://github.com/AmonRaNet/QGeoView.git
     GIT_TAG        4b2c52c80940e1073c259ded1a57df83036ba1c9  # master @ 2026-04-11
-    GIT_SHALLOW    TRUE
+    # No GIT_SHALLOW: this pin is an untagged master commit. A shallow clone only
+    # fetches the current branch tip, so once upstream master moves past the pin
+    # the checkout fails ("reference is not a tree"). The repo is small; a full
+    # clone is cheap.
     PATCH_COMMAND  ${CMAKE_COMMAND}
         -DFILE=<SOURCE_DIR>/lib/CMakeLists.txt
         -P "${CMAKE_CURRENT_SOURCE_DIR}/cmake/patches/qgeoview_remove_agl.cmake"
@@ -1169,6 +1172,7 @@ set(TRADING_SOURCES
     src/trading/OptionsStrategyBuilder.cpp
     src/trading/StrategyPortfolio.cpp
     src/trading/OrderValidator.cpp
+    src/trading/OrderRiskGate.cpp
     src/trading/LatencyTracker.cpp
     src/trading/TradingNotificationBridge.cpp
     src/trading/AccountManager.cpp
