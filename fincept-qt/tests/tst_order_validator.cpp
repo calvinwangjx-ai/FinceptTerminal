@@ -185,12 +185,12 @@ void TstOrderValidator::rejects_non_positive_quantity() {
     o.quantity = 0;
     auto r = OrderValidator::validate(o);
     QVERIFY(!r.valid);
-    QVERIFY(has_error(r, QStringLiteral("Quantity must be positive")));
+    QVERIFY(has_error(r, QStringLiteral("Quantity must be a positive number")));
 
     o.quantity = -5;
     r = OrderValidator::validate(o);
     QVERIFY(!r.valid);
-    QVERIFY(has_error(r, QStringLiteral("Quantity must be positive")));
+    QVERIFY(has_error(r, QStringLiteral("Quantity must be a positive number")));
 
     // Fractional quantities are permitted (crypto / fractional shares).
     o.quantity = 0.5;
@@ -287,7 +287,7 @@ void TstOrderValidator::errors_accumulate() {
     QCOMPARE(r.errors.size(), qsizetype(4));
     QVERIFY(has_error(r, QStringLiteral("Symbol is required")));
     QVERIFY(has_error(r, QStringLiteral("Invalid exchange: NOPE")));
-    QVERIFY(has_error(r, QStringLiteral("Quantity must be positive")));
+    QVERIFY(has_error(r, QStringLiteral("Quantity must be a positive number")));
     QVERIFY(has_error(r, QStringLiteral("Price is required")));
 }
 
@@ -336,7 +336,7 @@ void TstOrderValidator::smart_rejects_negative_quantity() {
     QVERIFY(!r.valid);
     QVERIFY(has_error(r, QStringLiteral("Quantity cannot be negative")));
     // And specifically NOT the stricter validate() wording.
-    QVERIFY(!has_error(r, QStringLiteral("Quantity must be positive")));
+    QVERIFY(!has_error(r, QStringLiteral("Quantity must be a positive number")));
 }
 
 void TstOrderValidator::smart_validates_symbol_and_exchange() {
@@ -431,7 +431,7 @@ void TstOrderValidator::basket_reports_the_failing_leg_by_index_and_symbol() {
     QVERIFY(!r.valid);
     QCOMPARE(r.errors.size(), qsizetype(1));
     // 1-based index, then the leg's symbol, then the underlying message.
-    QVERIFY2(has_error(r, QStringLiteral("Order 2 (TCS): Quantity must be positive")),
+    QVERIFY2(has_error(r, QStringLiteral("Order 2 (TCS): Quantity must be a positive number")),
              qPrintable(joined(r)));
     QVERIFY(!has_error(r, QStringLiteral("Order 1")));
 }

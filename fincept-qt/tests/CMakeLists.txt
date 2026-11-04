@@ -115,6 +115,9 @@ fincept_add_test(tst_result
 # src/trading/OrderValidator.{h,cpp} — the .cpp includes only its own header,
 # which includes only trading/TradingTypes.h (Qt Core types + plain structs, no
 # .cpp of its own). One extra TU, no service/network/broker-registry linkage.
+# The stateful risk-gate half (SettingsRepository / Logger) lives in
+# src/trading/OrderRiskGate.cpp and is deliberately NOT compiled here — keep
+# storage and logging includes out of OrderValidator.cpp.
 fincept_add_test(tst_order_validator
     tst_order_validator.cpp
     "${PROJECT_SOURCE_DIR}/src/trading/OrderValidator.cpp")
